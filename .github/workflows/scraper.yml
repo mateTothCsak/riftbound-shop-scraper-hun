@@ -1,9 +1,12 @@
-name: Run scraper twice daily
+name: Run scraper
 
 on:
   schedule:
     - cron: "0 8,20 * * *"   # Runs at 08:00 and 20:00 UTC every day
   workflow_dispatch:          # Allows manual run from GitHub UI
+  push:
+    branches:
+      - master
 
 jobs:
   scrape:
@@ -16,7 +19,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: '3.12'
 
       - name: Install dependencies
         run: |
@@ -25,7 +28,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y chromium-browser
 
-          
+
 
       - name: Run scraper
         env:
